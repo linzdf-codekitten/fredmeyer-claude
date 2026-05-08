@@ -28,7 +28,7 @@ This skill runs in four phases:
 cat fred-meyer-processed-orders.txt 2>/dev/null
 ```
 
-Each line is an order ID (e.g. `701~00122~2026-03-22~522~490951`). Store these as the `already_processed` set. If the file doesn't exist or is empty, `already_processed` is an empty set — all orders will be fetched.
+Each line is an order ID (e.g. `701~00123~2026-03-22~001~123456`). Store these as the `already_processed` set. If the file doesn't exist or is empty, `already_processed` is an empty set — all orders will be fetched.
 
 ---
 

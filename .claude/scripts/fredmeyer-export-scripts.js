@@ -62,7 +62,7 @@
 async () => {
   const DATE = '2026-XX-XX';   // e.g. '2026-03-22'
   const TYPE = 'in-store';     // 'in-store' or 'pickup'
-  const ID   = 'div~store~date~term~txn';  // e.g. '701~00122~2026-03-22~522~490951'
+  const ID   = 'DIV~STORE~DATE~TERM~TXN';  // e.g. '701~00123~2026-03-22~001~123456'
 
   let aside = null;
   for (let i = 0; i < 10; i++) {
@@ -136,7 +136,7 @@ async () => {
 // ─────────────────────────────────────────────
 /*
 async () => {
-  // Parse order ID: '701~00122~2026-03-22~522~490951'
+  // Parse order ID from the crawl phase (format: DIV~STORE~DATE~TERM~TXN)
   // Replace with the actual order ID from the crawl phase (format: DIV~STORE~DATE~TERM~TXN)
   const [divisionNumber, storeNumber, transactionDate, terminalNumber, transactionId] =
     'DIV~STORE~DATE~TERM~TXN'.split('~');
