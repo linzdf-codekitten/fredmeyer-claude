@@ -5,8 +5,6 @@ Two Claude Code skills that automate Fred Meyer grocery shopping via browser aut
 - **`fredmeyer-export`** — Crawls your Fred Meyer purchase history for the last 3 months and exports all items to `fred-meyer-purchases.csv` with dates, product links, and UPC codes.
 - **`fredmeyer-shop`** — Reads your purchase history, suggests a shopping list (staples + infrequent items), lets you confirm quantities, then adds everything to your Fred Meyer cart.
 
-Skills auto-trigger when Claude Code matches the user's request to a skill description — no slash command required. They activate when you ask things like "export my Fred Meyer history" or "what should I get from Fred Meyer this week?"
-
 ---
 
 ## Prerequisites
