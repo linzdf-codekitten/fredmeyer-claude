@@ -1,9 +1,11 @@
 # Fred Meyer Claude Code Skills
 
-Two Claude Code slash commands that automate Fred Meyer grocery shopping via browser automation:
+Two Claude Code skills that automate Fred Meyer grocery shopping via browser automation:
 
-- **`/fredmeyer-export`** — Crawls your Fred Meyer purchase history for the last 3 months and exports all items to `fred-meyer-purchases.csv` with dates, product links, and UPC codes.
-- **`/fredmeyer-shop`** — Reads your purchase history, suggests a shopping list (staples + infrequent items), lets you confirm quantities, then adds everything to your Fred Meyer cart.
+- **`fredmeyer-export`** — Crawls your Fred Meyer purchase history for the last 3 months and exports all items to `fred-meyer-purchases.csv` with dates, product links, and UPC codes.
+- **`fredmeyer-shop`** — Reads your purchase history, suggests a shopping list (staples + infrequent items), lets you confirm quantities, then adds everything to your Fred Meyer cart.
+
+Skills auto-trigger when Claude Code matches the user's request to a skill description — no slash command required. They activate when you ask things like "export my Fred Meyer history" or "what should I get from Fred Meyer this week?"
 
 ---
 
@@ -82,7 +84,7 @@ cd fredmeyer-skills
 # The skills are now available when you run `claude` from this directory
 ```
 
-The skills are project-scoped — they appear as `/fredmeyer-export` and `/fredmeyer-shop` only when Claude Code is running in this directory (or a subdirectory).
+The skills are project-scoped — they're available to Claude Code only when run from this directory (or a subdirectory).
 
 ---
 
@@ -92,14 +94,14 @@ The skills are project-scoped — they appear as `/fredmeyer-export` and `/fredm
 
 1. Launch Chrome with remote debugging (see above)
 2. Navigate to [fredmeyer.com](https://www.fredmeyer.com) and log in
-3. In Claude Code: `/fredmeyer-export`
+3. In Claude Code, ask something like "export my Fred Meyer purchase history"
 
 This creates `fred-meyer-purchases.csv` with your last 3 months of purchases. On subsequent runs it skips already-processed orders (tracked in `fred-meyer-processed-orders.txt`).
 
 ### Step 2: Build and submit a cart
 
 1. Make sure Chrome is open and you're logged in to Fred Meyer
-2. In Claude Code: `/fredmeyer-shop`
+2. In Claude Code, ask something like "help me build a Fred Meyer order" or "what should I order from Fred Meyer this week?"
 
 The skill will:
 - Analyze your purchase history to identify staples and infrequent items
@@ -113,13 +115,20 @@ The skill will:
 
 ```
 .claude/
-  commands/
-    fredmeyer-export.md      # /fredmeyer-export skill definition
-    fredmeyer-shop.md        # /fredmeyer-shop skill definition
-  scripts/
-    fredmeyer-export-scripts.js   # Reusable JS snippets for the export skill
-    fredmeyer-cart-api.js         # Reusable JS snippets for cart operations
-cdp.py                       # Optional: standalone CDP helper for direct use
+  skills/
+    _shared/
+      chrome-devtools-tips.md       # Shared MCP usage patterns
+    fredmeyer-export/
+      SKILL.md                       # Export skill instructions
+      references/
+        extract-snippets.md          # Order list / item / merge snippets
+    fredmeyer-shop/
+      SKILL.md                       # Shop skill instructions
+      references/
+        cart-snippets.md             # Cart-API + DOM snippets
+        categories.md                # Category keyword tables
+        output-format.md             # Suggested-list and final-order templates
+cdp.py                               # Optional: standalone CDP helper for direct use
 ```
 
 **Runtime files** (generated, not tracked in git):
