@@ -5,7 +5,7 @@ description: Crawls QFC purchase history via the chrome-devtools MCP and exports
 
 # QFC Purchase History Export
 
-Crawl the last 3 months of purchase history on qfc.com and write all items to `qfc-purchases.csv`.
+Crawl the last 1 week of purchase history on qfc.com and write all items to `qfc-purchases.csv`.
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Navigate to `https://www.qfc.com/mypurchases`. Run snippet 1 (login check) from 
 ### Step 2 — Compute the cutoff date
 
 ```bash
-date -d "3 months ago" +%Y-%m-%d
+date -d "1 week ago" +%Y-%m-%d
 ```
 
 Only collect orders on or after this date.
@@ -76,29 +76,8 @@ The extractor writes CSV rows to `localStorage['qfc_' + ID]` and returns the row
 
 Run the read-back snippet (snippet 4 in `references/extract-snippets.md`). It returns `{ orderId: "csv_rows" }` for every accumulated key and clears them.
 
-Write each order's rows to `/tmp/qfc-order-{ID}.csv`.
+Write each order's rows to `/tmp/qfc/qfc-order-{ID}.csv`.
 
----
-
-## Phase 3: Merge and sort
-
-### Step 6 — Merge and sort with Python
-
-Run the merge script (snippet 5 in `references/extract-snippets.md`). Python (not bash `sort`) handles CSV-quoted fields correctly. The script sorts by date descending then item name ascending, and writes `qfc-purchases.csv` with the header row.
-
-### Step 7 — Record processed order IDs
-
-Append the newly processed order IDs to `qfc-processed-orders.txt`, one per line.
-
-### Step 8 — Clean up and report
-
-Remove the temp files (`rm -f /tmp/qfc-order-*.csv`) and summarize:
-
-- Date range covered (oldest → newest)
-- Number of new orders processed (and how many were skipped as already-processed)
-- Number of unique UPCs
-- Total rows written
-- Output path: `qfc-purchases.csv`
 
 ---
 
