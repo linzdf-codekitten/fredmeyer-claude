@@ -9,9 +9,18 @@ Crawl the last 1 week of purchase history on qfc.com and write all items to `qfc
 
 ## Prerequisites
 
-- Chrome launched with remote debugging (see project README).
+- The user's own Chrome (not a headless instance launched by Claude) running with remote debugging on port 9222, signed in to qfc.com.
 - The `chrome-devtools` MCP server configured.
-- The user signed in to qfc.com.
+
+**IMPORTANT — do not launch Chrome yourself.** QFC's bot detection (Akamai) blocks any headless or CDP-driven browser that Claude launches. The skill only works if the user's real Chrome is already on port 9222 with an active QFC session.
+
+Before Phase 0, verify Chrome is ready:
+```bash
+curl -s http://localhost:9222/json/version | grep -i "HeadlessChrome\|headless"
+```
+- If the port is unreachable: stop and ask the user to launch Chrome with `--remote-debugging-port=9222` and sign in to qfc.com, then try again.
+- If the result contains `HeadlessChrome` or `headless`: stop and tell the user this is a headless browser — QFC will block it. Ask them to launch a real (non-headless) Chrome window with `--remote-debugging-port=9222 --user-data-dir=$HOME/.config/google-chrome`.
+- If the result shows a normal Chrome version with no headless flag: proceed.
 
 Read `../_shared/chrome-devtools-tips.md` once before starting — it covers the patterns this skill depends on (`evaluate_script` over `take_snapshot`, React render waits, localStorage accumulation).
 
